@@ -1,8 +1,8 @@
 const express = require('express');
 
-// const authRouter = require('../auth/auth-router.js');
-// const userRouter = require('../users/users-router.js');
-// const setupGlobalMiddleware = require('./setup-middleware.js');
+const authRouter = require('../auth/auth-router.js');
+const usersRouter = require('../users/users-router.js');
+const setupGlobalMiddleware = require('./setup-middleware.js');
 
 const server = express();
 

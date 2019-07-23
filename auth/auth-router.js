@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
-const session = require('express-session');
+// const session = require('express-session');
 
 const Users = require('../users/users-model.js');
 
@@ -26,7 +26,11 @@ router.post('/api/login', (req, res) => {
     .first()
     .then(user => {
         if (user && bcrypt.compareSync(password, user.password)) {
-            res.status(200).json({ message: `Welcome ${user.username}!` });
+            res.session.username = user.username;
+
+            res.status(200).json({
+                message: `Welcome ${user.username}!`,
+            });
         } else {
             res.status(401).json({ message: 'Invalid Credentials' });
         }
@@ -36,11 +40,7 @@ router.post('/api/login', (req, res) => {
     });
 });
 
-router.get('/logout', (req, res) => {
-
-})
-
-router.get('/api/users', authenticate, (req, res) => {
+router.get('/api/users', (req, res) => {
     Users.find()
     .then(users => {
         res.json(users);
@@ -48,4 +48,20 @@ router.get('/api/users', authenticate, (req, res) => {
     .catch(err => res.send(err));
 })
 
-module.exports = router
+
+router.get('/logout', (req, res) => {
+    if (req.session) {
+        req.session.destroy(err => {
+            if (err) {
+                res.status(500).json({ message: 'you can checkout, but you cant leave'});
+            } else {
+                res.status(200).json({ message: 'Adios!!'});
+            }
+        });
+            } else {
+                res.status(200).json({ message: 'Peace!!!!'});
+            }
+        });
+
+
+module.exports = router;
