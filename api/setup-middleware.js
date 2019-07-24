@@ -5,7 +5,7 @@ const session = require('express-session');
 const KnexSessionStore = require('connect-session-knex')(session);
 
 module.exports = server => {
-    const sessionConfig ={
+    const sessionConfig = {
         name: 'mordor',
         secret: process.env.SESSION_SECRET || 'keep it secret, keep it safe',
         cookie: {

@@ -1,19 +1,7 @@
-const express = require('express');
-const helmet = require('helmet');
-const cors = require('cors');
-const bcrypt = require('bcryptjs');
 
-const authenticate = require('./auth/authenticate-middleware.js');
 
-const server = express();
+const server = require('./api/server.js');
 
-server.use(helmet());
-server.use(express.json());
-server.use(cors());
-
-server.get('/', (req, res) => {
-    res.send('Its Working!!!!!')
-})
 
 
 
